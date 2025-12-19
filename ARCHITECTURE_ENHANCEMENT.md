@@ -35,6 +35,7 @@ internal/
 Comprehensive input validation with custom error messages.
 
 **Features:**
+
 - ✅ Email validation (regex-based)
 - ✅ Password strength validation (min 8 chars, uppercase, digit)
 - ✅ String length validation
@@ -44,6 +45,7 @@ Comprehensive input validation with custom error messages.
 - ✅ Pagination validation
 
 **Request Validators:**
+
 - `RegisterRequest` - User registration
 - `LoginRequest` - User login
 - `CreateCourseRequest` - Course creation
@@ -51,6 +53,7 @@ Comprehensive input validation with custom error messages.
 - `CreateQuizRequest` - Quiz creation
 
 **Example:**
+
 ```go
 req := validators.CreateCourseRequest{
     Title: "Go Programming",
@@ -71,12 +74,14 @@ if errs := req.Validate(); !errs.IsEmpty() {
 Business logic separation for better maintainability and testing.
 
 **Services:**
+
 - `UserService` - User management, authentication
 - `CourseService` - Course management, enrollments
 - `AssignmentService` - Assignment management
 - `QuizService` - Quiz management and statistics
 
 **Features:**
+
 - ✅ Validation before database operations
 - ✅ Error handling and meaningful error messages
 - ✅ Transaction support
@@ -84,6 +89,7 @@ Business logic separation for better maintainability and testing.
 - ✅ Data relationships management
 
 **Example:**
+
 ```go
 userService := services.NewUserService(db)
 user, errs := userService.RegisterUser(registerReq)
@@ -98,6 +104,7 @@ if !errs.IsEmpty() {
 Standardized API responses with consistent structure.
 
 **Response Structure:**
+
 ```json
 {
   "success": true,
@@ -108,6 +115,7 @@ Standardized API responses with consistent structure.
 ```
 
 **Response Functions:**
+
 ```go
 responses.Success(c, "User created", user)           // 200
 responses.SuccessCreated(c, "Resource created", data) // 201
@@ -124,11 +132,13 @@ responses.InternalServerError(c, "Error", err)        // 500
 DTOs for clean data transfer between layers.
 
 **Types:**
+
 - User, Course, Assignment, Submission DTOs
 - Request DTOs (UpdateProfileRequest, GradeSubmissionRequest, etc.)
 - Response DTOs (DashboardStatsDTO, CourseStatsDTO, etc.)
 
 **Benefits:**
+
 - ✅ Decouples API from database models
 - ✅ Consistent data structure
 - ✅ Type safety
@@ -139,6 +149,7 @@ DTOs for clean data transfer between layers.
 Improved middleware with better error handling.
 
 **Middleware:**
+
 - `CORSMiddleware` - CORS configuration
 - `AuthMiddleware` - JWT authentication
 - `RoleMiddleware` - Role-based access control
@@ -186,7 +197,7 @@ func Register(c *gin.Context, db *gorm.DB) {
 
     userService := services.NewUserService(db)
     user, errs := userService.RegisterUser(req)
-    
+
     if !errs.IsEmpty() {
         responses.ValidationFailed(c, errs)
         return
@@ -209,7 +220,7 @@ func CreateCourse(c *gin.Context, db *gorm.DB) {
 
     courseService := services.NewCourseService(db)
     course, errs := courseService.CreateCourse(req)
-    
+
     if !errs.IsEmpty() {
         responses.ValidationFailed(c, errs)
         return
@@ -225,10 +236,10 @@ func CreateCourse(c *gin.Context, db *gorm.DB) {
 // Handler
 func GetCourses(c *gin.Context, db *gorm.DB) {
     params := validators.GetPaginationParams(c)
-    
+
     courseService := services.NewCourseService(db)
     courses, total, err := courseService.GetCoursesByLevel("Beginner", params.Page, params.PageSize)
-    
+
     if err != nil {
         responses.InternalServerError(c, "Failed to fetch courses", err.Error())
         return
@@ -243,18 +254,22 @@ func GetCourses(c *gin.Context, db *gorm.DB) {
 ## 🛡️ Validation Examples
 
 ### Email Validation
+
 ```go
 // Valid: user@example.com
 // Invalid: invalid.email, user@, @example.com
 ```
 
 ### Password Validation
+
 Requirements:
+
 - Minimum 8 characters
 - At least one uppercase letter
 - At least one digit
 
 ### UUID Validation
+
 ```go
 // Valid: 550e8400-e29b-41d4-a716-446655440000
 // Invalid: not-a-uuid, 12345
@@ -299,15 +314,18 @@ Requirements:
 ## 🚀 Performance Optimizations
 
 1. **Database Query Optimization**
+
    - Preloading relationships
    - Pagination support
    - Indexed fields
 
 2. **Service Layer Caching**
+
    - Ready for Redis integration
    - User lookup optimization
 
 3. **Response Compression**
+
    - JSON serialization
    - Minimal payload
 
@@ -325,7 +343,7 @@ Requirements:
 func TestUserRegistration(t *testing.T) {
     db := setupTestDB()
     userService := services.NewUserService(db)
-    
+
     req := validators.RegisterRequest{
         Email:     "test@example.com",
         Password:  "Test@1234",
@@ -333,7 +351,7 @@ func TestUserRegistration(t *testing.T) {
         LastName:  "User",
         Role:      "student",
     }
-    
+
     user, errs := userService.RegisterUser(req)
     assert.Nil(t, errs)
     assert.NotNil(t, user)
@@ -348,7 +366,7 @@ func TestCourseCreationFlow(t *testing.T) {
     // Setup
     db := setupTestDB()
     router := setupRouter(db)
-    
+
     // Register user
     // Login
     // Create course
@@ -361,15 +379,18 @@ func TestCourseCreationFlow(t *testing.T) {
 ## 📈 Scalability Features
 
 1. **Service Layer Abstraction**
+
    - Easy to add caching
    - Easy to add queue/worker pattern
    - Easy to split into microservices
 
 2. **Repository Pattern Ready**
+
    - Can add repository interface layer
    - Database agnostic business logic
 
 3. **Configuration Management**
+
    - Environment-based config
    - Feature flags support
 
@@ -385,6 +406,7 @@ func TestCourseCreationFlow(t *testing.T) {
 ### From Old Handler to New Service-Based Handler
 
 **Old Way:**
+
 ```go
 func GetUser(c *gin.Context, db *gorm.DB) {
     var user models.User
@@ -394,16 +416,17 @@ func GetUser(c *gin.Context, db *gorm.DB) {
 ```
 
 **New Way:**
+
 ```go
 func GetUser(c *gin.Context, db *gorm.DB) {
     userService := services.NewUserService(db)
     user, err := userService.GetUserByID(c.Param("id"))
-    
+
     if err != nil {
         responses.NotFound(c, "User not found")
         return
     }
-    
+
     responses.Success(c, "User retrieved", user)
 }
 ```
@@ -442,6 +465,7 @@ for _, course := range user.Courses {
 ## 📞 Support
 
 For issues or questions:
+
 1. Check validation error messages
 2. Review error logs
 3. Check database constraints
