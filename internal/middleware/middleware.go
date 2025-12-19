@@ -1,9 +1,11 @@
 package middleware
 
 import (
+	"log"
 	"net/http"
 	"strings"
 
+	"lms-go/internal/responses"
 	"lms-go/internal/utils"
 
 	"github.com/gin-gonic/gin"
@@ -26,15 +28,42 @@ func CORSMiddleware() gin.HandlerFunc {
 	}
 }
 
-// ErrorHandlerMiddleware handles errors
+// ErrorHandlerMiddleware handles errors with enhanced responses
 func ErrorHandlerMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		c.Next()
 
 		if len(c.Errors) > 0 {
 			err := c.Errors.Last()
-			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			log.Printf("Error: %v", err.Error())
+
+			statusCode := http.StatusInternalServerError
+			message := "Internal server error"
+
+			switch err.Type {
+			case gin.ErrorTypeBind:
+				statusCode = http.StatusBadRequest
+				message = "Invalid request format"
+			case gin.ErrorTypePublic:
+				statusCode = http.StatusBadRequest
+				message = err.Error()
+			}
+
+			responses.Error(c, statusCode, message, err.Error())
 		}
+	}
+}
+
+// RecoveryMiddleware recovers from panics
+func RecoveryMiddleware() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		defer func() {
+			if err := recover(); err != nil {
+				log.Printf("Panic recovered: %v", err)
+				responses.InternalServerError(c, "An unexpected error occurred", err)
+			}
+		}()
+		c.Next()
 	}
 }
 
