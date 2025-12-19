@@ -629,7 +629,7 @@ func SeedDatabase(db *gorm.DB) error {
 		}
 	}
 
-	fmt.Println("\n✅ Database seeding completed successfully!\n")
+	fmt.Println("\n✅ Database seeding completed successfully!")
 	fmt.Println("📝 Test User Credentials:")
 	fmt.Println("  Admin: admin@example.com / admin123")
 	fmt.Println("  Instructor: instructor1@example.com / instructor123")
