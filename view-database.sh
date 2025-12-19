@@ -106,7 +106,7 @@ echo "🎯 QUIZZES:"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo ""
 psql -U user -d lms_db -h localhost -c "
-SELECT q.title, c.title as course, q.max_score 
+SELECT q.title, c.title as course, q.pass_score 
 FROM quizzes q
 JOIN courses c ON q.course_id = c.id
 LIMIT 10;"
