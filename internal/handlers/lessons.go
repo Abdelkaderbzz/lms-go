@@ -3,9 +3,10 @@ package handlers
 import (
 	"net/http"
 
+	"lms-go/internal/models"
+
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
-	"lms-go/internal/models"
 )
 
 // CreateModule creates a new course module

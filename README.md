@@ -5,6 +5,7 @@ A comprehensive Learning Management System built with Go, featuring complete rol
 ## Features
 
 ### 👨‍🎓 Student Features
+
 - **Course Enrollment**: Browse and enroll in available courses
 - **Learning Content**: Access lessons with video, text, and downloadable resources
 - **Assignments**: Submit assignments with file uploads and receive feedback
@@ -16,6 +17,7 @@ A comprehensive Learning Management System built with Go, featuring complete rol
 - **Notifications**: Receive real-time notifications for announcements and grades
 
 ### 👨‍🏫 Instructor Features
+
 - **Course Management**: Create and manage courses with full customization
 - **Content Creation**: Create modules, lessons, and resources
 - **Assignments**: Design and manage assignments with due dates
@@ -27,6 +29,7 @@ A comprehensive Learning Management System built with Go, featuring complete rol
 - **Discussion Moderation**: Manage course discussions and forums
 
 ### 🔧 Admin Features
+
 - **User Management**: Create, update, and manage all users
 - **Course Oversight**: Oversee all courses and instructor activities
 - **System Analytics**: Comprehensive system-wide reports and statistics
@@ -85,6 +88,7 @@ lms-go/
 ## Installation & Setup
 
 ### Prerequisites
+
 - Go 1.21+
 - PostgreSQL 12+
 - Docker & Docker Compose (optional)
@@ -92,27 +96,32 @@ lms-go/
 ### Local Setup
 
 1. **Clone the repository**
+
 ```bash
 cd /Users/abdelkaderbouzomita/Sites/lms-go
 ```
 
 2. **Install dependencies**
+
 ```bash
 go mod download
 go mod tidy
 ```
 
 3. **Set up environment variables**
+
 ```bash
 cp .env.example .env
 ```
 
 4. **Start PostgreSQL using Docker Compose**
+
 ```bash
 docker-compose up -d
 ```
 
 5. **Run the application**
+
 ```bash
 go run main.go
 ```
@@ -124,6 +133,7 @@ The server will start on `http://localhost:8080`
 ### Authentication Endpoints
 
 #### Register User
+
 ```
 POST /api/public/auth/register
 Content-Type: application/json
@@ -138,6 +148,7 @@ Content-Type: application/json
 ```
 
 #### Login
+
 ```
 POST /api/public/auth/login
 Content-Type: application/json
@@ -149,6 +160,7 @@ Content-Type: application/json
 ```
 
 **Response:**
+
 ```json
 {
   "token": "eyJhbGciOiJIUzI1NiIs...",
@@ -165,12 +177,14 @@ Content-Type: application/json
 ### User Endpoints
 
 #### Get Profile
+
 ```
 GET /api/users/profile
 Authorization: Bearer <token>
 ```
 
 #### Update Profile
+
 ```
 PUT /api/users/profile
 Authorization: Bearer <token>
@@ -188,6 +202,7 @@ Content-Type: application/json
 ### Course Endpoints
 
 #### Create Course (Instructor/Admin)
+
 ```
 POST /api/courses
 Authorization: Bearer <token>
@@ -204,18 +219,21 @@ Content-Type: application/json
 ```
 
 #### Get All Courses
+
 ```
 GET /api/courses
 Authorization: Bearer <token>
 ```
 
 #### Get Course Details
+
 ```
 GET /api/courses/{courseID}
 Authorization: Bearer <token>
 ```
 
 #### Enroll in Course
+
 ```
 POST /api/courses/{courseID}/enroll
 Authorization: Bearer <token>
@@ -224,6 +242,7 @@ Authorization: Bearer <token>
 ### Module & Lesson Endpoints
 
 #### Create Module (Instructor)
+
 ```
 POST /api/courses/{courseID}/modules
 Authorization: Bearer <token>
@@ -237,6 +256,7 @@ Content-Type: application/json
 ```
 
 #### Create Lesson (Instructor)
+
 ```
 POST /api/courses/modules/{moduleID}/lessons
 Authorization: Bearer <token>
@@ -254,6 +274,7 @@ Content-Type: application/json
 ```
 
 #### Get Modules for Course
+
 ```
 GET /api/courses/{courseID}/modules
 Authorization: Bearer <token>
@@ -262,6 +283,7 @@ Authorization: Bearer <token>
 ### Assignment Endpoints
 
 #### Create Assignment (Instructor)
+
 ```
 POST /api/courses/{courseID}/assignments
 Authorization: Bearer <token>
@@ -277,6 +299,7 @@ Content-Type: application/json
 ```
 
 #### Submit Assignment (Student)
+
 ```
 POST /api/courses/assignments/{assignmentID}/submit
 Authorization: Bearer <token>
@@ -289,6 +312,7 @@ Content-Type: application/json
 ```
 
 #### Grade Submission (Instructor)
+
 ```
 POST /api/courses/submissions/{submissionID}/grade
 Authorization: Bearer <token>
@@ -303,6 +327,7 @@ Content-Type: application/json
 ### Quiz Endpoints
 
 #### Create Quiz (Instructor)
+
 ```
 POST /api/courses/{courseID}/quizzes
 Authorization: Bearer <token>
@@ -321,6 +346,7 @@ Content-Type: application/json
 ```
 
 #### Add Question to Quiz
+
 ```
 POST /api/courses/quizzes/{quizID}/questions
 Authorization: Bearer <token>
@@ -335,12 +361,14 @@ Content-Type: application/json
 ```
 
 #### Start Quiz Attempt (Student)
+
 ```
 POST /api/courses/quizzes/{quizID}/start
 Authorization: Bearer <token>
 ```
 
 #### Submit Quiz Attempt (Student)
+
 ```
 POST /api/courses/attempts/{attemptID}/submit
 Authorization: Bearer <token>
@@ -360,6 +388,7 @@ Content-Type: application/json
 ### Discussion Endpoints
 
 #### Create Discussion
+
 ```
 POST /api/courses/{courseID}/discussions
 Authorization: Bearer <token>
@@ -372,6 +401,7 @@ Content-Type: application/json
 ```
 
 #### Create Forum Post
+
 ```
 POST /api/courses/discussions/{discussionID}/posts
 Authorization: Bearer <token>
@@ -384,6 +414,7 @@ Content-Type: application/json
 ```
 
 #### Reply to Post
+
 ```
 POST /api/courses/posts/{postID}/replies
 Authorization: Bearer <token>
@@ -397,12 +428,14 @@ Content-Type: application/json
 ### Grade & Notification Endpoints
 
 #### Get My Grades (Student)
+
 ```
 GET /api/courses/{courseID}/my-grades
 Authorization: Bearer <token>
 ```
 
 #### Get Notifications
+
 ```
 GET /api/courses/notifications
 Authorization: Bearer <token>
@@ -411,24 +444,28 @@ Authorization: Bearer <token>
 ### Admin Endpoints
 
 #### Get Admin Dashboard
+
 ```
 GET /api/admin/dashboard
 Authorization: Bearer <admin_token>
 ```
 
 #### Get System Reports
+
 ```
 GET /api/admin/reports
 Authorization: Bearer <admin_token>
 ```
 
 #### Get All Users (Admin)
+
 ```
 GET /api/admin/users
 Authorization: Bearer <admin_token>
 ```
 
 #### Update User (Admin)
+
 ```
 PUT /api/admin/users/{userID}
 Authorization: Bearer <admin_token>
@@ -475,6 +512,7 @@ The system uses JWT (JSON Web Tokens) for authentication with role-based access 
 - **Admin**: Full system access and management capabilities
 
 ### Token Format
+
 ```
 Authorization: Bearer <JWT_TOKEN>
 ```
@@ -494,16 +532,19 @@ The API returns appropriate HTTP status codes:
 ## Development
 
 ### Running Tests
+
 ```bash
 go test ./...
 ```
 
 ### Building for Production
+
 ```bash
 go build -o lms-server
 ```
 
 ### Docker Deployment
+
 ```bash
 docker build -t lms-app .
 docker-compose -f docker-compose.yml up -d
@@ -550,6 +591,7 @@ For issues or questions, please contact the development team.
 ---
 
 **Ready to Deploy!** This LMS system is production-ready with:
+
 - Complete REST API
 - Role-based access control
 - Database migrations

@@ -4,8 +4,9 @@ import (
 	"errors"
 	"time"
 
-	jwtlib "github.com/golang-jwt/jwt/v5"
 	"lms-go/internal/config"
+
+	jwtlib "github.com/golang-jwt/jwt/v5"
 )
 
 type Claims struct {

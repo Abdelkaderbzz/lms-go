@@ -4,9 +4,10 @@ import (
 	"net/http"
 	"time"
 
+	"lms-go/internal/models"
+
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
-	"lms-go/internal/models"
 )
 
 // EnrollStudent enrolls a student in a course

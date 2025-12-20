@@ -3,9 +3,10 @@ package database
 import (
 	"fmt"
 
+	"lms-go/internal/models"
+
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
-	"lms-go/internal/models"
 )
 
 func InitDB(dsn string) (*gorm.DB, error) {
