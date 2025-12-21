@@ -124,7 +124,9 @@ func CreateTestCourse(db *gorm.DB, title, code string, instructor *models.User) 
 	}
 
 	if instructor != nil {
-		db.Model(course).Association("Instructors").Append(instructor)
+		if err := db.Model(course).Association("Instructors").Append(instructor); err != nil {
+			log.Printf("Warning: Failed to add instructor to course: %v", err)
+		}
 	}
 
 	return course
@@ -226,10 +228,10 @@ func CreateTestQuiz(db *gorm.DB, courseID, creatorID, title string) *models.Quiz
 // CreateTestEnrollment creates a test enrollment
 func CreateTestEnrollment(db *gorm.DB, courseID, userID string) *models.Enrollment {
 	enrollment := &models.Enrollment{
-		CourseID:   courseID,
-		UserID:     userID,
-		Status:     "active",
-		Progress:   0,
+		CourseID: courseID,
+		UserID:   userID,
+		Status:   "active",
+		Progress: 0,
 	}
 
 	if err := db.Create(enrollment).Error; err != nil {
