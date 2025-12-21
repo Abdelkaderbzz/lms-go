@@ -38,8 +38,8 @@ func NewMockDB() *MockDB {
 func TestUserServiceRegisterUserValidation(t *testing.T) {
 	// This tests that the service validates input before processing
 	tests := []struct {
-		name    string
-		req     validators.RegisterRequest
+		name      string
+		req       validators.RegisterRequest
 		shouldErr bool
 	}{
 		{
@@ -85,8 +85,8 @@ func TestUserServiceRegisterUserValidation(t *testing.T) {
 
 func TestCreateCourseRequestValidation(t *testing.T) {
 	tests := []struct {
-		name    string
-		req     validators.CreateCourseRequest
+		name      string
+		req       validators.CreateCourseRequest
 		shouldErr bool
 	}{
 		{
@@ -146,8 +146,8 @@ func TestCreateCourseRequestValidation(t *testing.T) {
 
 func TestCreateAssignmentRequestValidation(t *testing.T) {
 	tests := []struct {
-		name    string
-		req     validators.CreateAssignmentRequest
+		name      string
+		req       validators.CreateAssignmentRequest
 		shouldErr bool
 	}{
 		{
@@ -201,8 +201,8 @@ func TestCreateAssignmentRequestValidation(t *testing.T) {
 
 func TestCreateQuizRequestValidation(t *testing.T) {
 	tests := []struct {
-		name    string
-		req     validators.CreateQuizRequest
+		name      string
+		req       validators.CreateQuizRequest
 		shouldErr bool
 	}{
 		{
@@ -256,23 +256,23 @@ func TestCreateQuizRequestValidation(t *testing.T) {
 
 func TestPaginationValidation(t *testing.T) {
 	tests := []struct {
-		name    string
-		params  validators.PaginationParams
+		name      string
+		params    validators.PaginationParams
 		shouldErr bool
 	}{
 		{
-			name:    "Valid pagination",
-			params:  validators.PaginationParams{Page: 1, PageSize: 10},
+			name:      "Valid pagination",
+			params:    validators.PaginationParams{Page: 1, PageSize: 10},
 			shouldErr: false,
 		},
 		{
-			name:    "High page number",
-			params:  validators.PaginationParams{Page: 100, PageSize: 50},
+			name:      "High page number",
+			params:    validators.PaginationParams{Page: 100, PageSize: 50},
 			shouldErr: false,
 		},
 		{
-			name:    "Page size too large",
-			params:  validators.PaginationParams{Page: 1, PageSize: 200},
+			name:      "Page size too large",
+			params:    validators.PaginationParams{Page: 1, PageSize: 200},
 			shouldErr: true,
 		},
 	}
@@ -395,13 +395,13 @@ func TestQuizStructure(t *testing.T) {
 
 func TestEnrollmentStructure(t *testing.T) {
 	enrollment := &models.Enrollment{
-		ID:        "test-enrollment-id",
-		CourseID:  "course-id",
-		UserID:    "user-id",
-		Status:    "active",
-		Progress:  25.5,
+		ID:         "test-enrollment-id",
+		CourseID:   "course-id",
+		UserID:     "user-id",
+		Status:     "active",
+		Progress:   25.5,
 		EnrolledAt: time.Now(),
-		CreatedAt: time.Now(),
+		CreatedAt:  time.Now(),
 	}
 
 	if enrollment.Status != "active" {
@@ -420,13 +420,13 @@ func TestEnrollmentStructure(t *testing.T) {
 func TestGradeStructure(t *testing.T) {
 	gradeTime := time.Now()
 	grade := &models.Grade{
-		ID:           "test-grade-id",
-		UserID:       "user-id",
-		CourseID:     "course-id",
-		Points:       85.5,
-		Feedback:     "Good work",
-		GradedAt:     gradeTime,
-		CreatedAt:    time.Now(),
+		ID:        "test-grade-id",
+		UserID:    "user-id",
+		CourseID:  "course-id",
+		Points:    85.5,
+		Feedback:  "Good work",
+		GradedAt:  gradeTime,
+		CreatedAt: time.Now(),
 	}
 
 	if grade.Points != 85.5 {
@@ -449,8 +449,8 @@ func TestGradeStructure(t *testing.T) {
 func TestValidationErrorHandling(t *testing.T) {
 	// Test that validation errors are properly formatted
 	req := validators.RegisterRequest{
-		Email:    "invalid-email",
-		Password: "weak",
+		Email:     "invalid-email",
+		Password:  "weak",
 		FirstName: "",
 		LastName:  "Doe",
 		Role:      "invalid_role",
@@ -496,9 +496,9 @@ func TestBeforeCreateHookUser(t *testing.T) {
 
 func TestBeforeCreateHookCourse(t *testing.T) {
 	course := &models.Course{
-		Title:   "Test Course",
-		Code:    "TC101",
-		Level:   "Beginner",
+		Title: "Test Course",
+		Code:  "TC101",
+		Level: "Beginner",
 	}
 
 	// Simulate GORM hook
@@ -519,10 +519,10 @@ func TestBeforeCreateHookCourse(t *testing.T) {
 func TestServiceInitialization(t *testing.T) {
 	// This test ensures services can be initialized properly
 	// In a real scenario, this would use a test database
-	
+
 	// Check that service methods exist by reflecting on the type
 	tests := []struct {
-		name string
+		name  string
 		check func() bool
 	}{
 		{"Services initialized", func() bool { return true }},
