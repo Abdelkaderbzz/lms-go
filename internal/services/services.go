@@ -2,6 +2,7 @@ package services
 
 import (
 	"errors"
+	"log"
 
 	"lms-go/internal/models"
 	"lms-go/internal/validators"
@@ -417,13 +418,13 @@ func (s *QuizService) CreateQuiz(courseID, creatorID string, req validators.Crea
 	}
 
 	quiz := &models.Quiz{
-		CourseID:  courseID,
-		CreatorID: creatorID,
-		Title:     req.Title,
+		CourseID:    courseID,
+		CreatorID:   creatorID,
+		Title:       req.Title,
 		Description: req.Description,
-		TimeLimit: req.TimeLimit,
-		PassScore: req.PassScore,
-		Public:    true,
+		TimeLimit:   req.TimeLimit,
+		PassScore:   req.PassScore,
+		Public:      true,
 	}
 
 	if err := s.db.Create(quiz).Error; err != nil {
@@ -468,9 +469,9 @@ func (s *QuizService) StartQuizAttempt(quizID, userID string) (*models.QuizAttem
 	}
 
 	attempt := &models.QuizAttempt{
-		QuizID:    quizID,
-		UserID:    userID,
-		Status:    "in_progress",
+		QuizID: quizID,
+		UserID: userID,
+		Status: "in_progress",
 	}
 
 	if err := s.db.Create(attempt).Error; err != nil {
@@ -500,10 +501,12 @@ func (s *QuizService) GetQuizStats(quizID string) (map[string]interface{}, error
 		Count(&submitted)
 
 	// Calculate average score
-	s.db.Model(&models.QuizAttempt{}).
+	if err := s.db.Model(&models.QuizAttempt{}).
 		Where("quiz_id = ? AND status = ?", quizID, "submitted").
 		Select("COALESCE(AVG(score), 0)").
-		Row().Scan(&average)
+		Row().Scan(&average); err != nil {
+		log.Printf("Warning: Failed to calculate average score: %v", err)
+	}
 
 	var submissionRate float64
 	if total > 0 {
@@ -511,9 +514,9 @@ func (s *QuizService) GetQuizStats(quizID string) (map[string]interface{}, error
 	}
 
 	return map[string]interface{}{
-		"total_attempts":    total,
-		"submitted":         submitted,
-		"average_score":     average,
-		"submission_rate":   submissionRate,
+		"total_attempts":  total,
+		"submitted":       submitted,
+		"average_score":   average,
+		"submission_rate": submissionRate,
 	}, nil
 }

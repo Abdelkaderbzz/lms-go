@@ -294,7 +294,7 @@ func TestPaginatedResponseStructure(t *testing.T) {
 
 	// Data contains the paginated response
 	data := response["data"].(map[string]interface{})
-	
+
 	if data["items"] == nil {
 		t.Error("Expected items field in data")
 	}

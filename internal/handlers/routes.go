@@ -48,7 +48,7 @@ func SetupRoutes(router *gin.Engine, db *gorm.DB) {
 			courses.GET("/instructor/list", middleware.RoleMiddleware(models.RoleInstructor), func(c *gin.Context) { GetInstructorCourses(c, db) })
 			courses.GET("/student/list", middleware.RoleMiddleware(models.RoleStudent), func(c *gin.Context) { GetStudentCourses(c, db) })
 			courses.GET("/notifications", func(c *gin.Context) { GetNotifications(c, db) })
-			
+
 			// Lesson routes (all specific to /lessons/:id before going to assignments)
 			courses.GET("/lessons/:id/progress", func(c *gin.Context) { GetLessonProgress(c, db) })
 			courses.POST("/lessons/:id/progress", func(c *gin.Context) { UpdateLessonProgress(c, db) })

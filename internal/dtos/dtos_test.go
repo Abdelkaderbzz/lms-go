@@ -309,11 +309,11 @@ func TestDashboardStatsDTOSerialization(t *testing.T) {
 
 func TestCourseStatsDTOSerialization(t *testing.T) {
 	stats := CourseStatsDTO{
-		CourseID:        "course-123",
+		CourseID:         "course-123",
 		TotalEnrollments: 50,
-		AverageProgress: 75.5,
-		AverageGrade:    82.3,
-		CompletionRate:  85.0,
+		AverageProgress:  75.5,
+		AverageGrade:     82.3,
+		CompletionRate:   85.0,
 	}
 
 	data, err := json.Marshal(stats)
@@ -456,12 +456,12 @@ func TestEnrollmentDTOSerialization(t *testing.T) {
 
 func TestNotificationDTOSerialization(t *testing.T) {
 	notification := NotificationDTO{
-		ID:        "notif-123",
-		UserID:    "user-123",
-		Type:      "assignment",
-		Title:     "New assignment",
-		Message:   "Assignment 1 posted",
-		Read:      false,
+		ID:      "notif-123",
+		UserID:  "user-123",
+		Type:    "assignment",
+		Title:   "New assignment",
+		Message: "Assignment 1 posted",
+		Read:    false,
 	}
 
 	data, err := json.Marshal(notification)
@@ -576,10 +576,10 @@ func TestDTOEmptyValues(t *testing.T) {
 	user := UserDTO{
 		ID:        "123",
 		Email:     "user@example.com",
-		FirstName: "",  // Empty string
-		LastName:  "",  // Empty string
+		FirstName: "", // Empty string
+		LastName:  "", // Empty string
 		Role:      "student",
-		Active:    false,  // False boolean
+		Active:    false, // False boolean
 	}
 
 	data, err := json.Marshal(user)

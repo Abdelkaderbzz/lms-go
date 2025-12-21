@@ -125,10 +125,10 @@ func CreateQuestion(c *gin.Context, db *gorm.DB) {
 	quizID := c.Param("quizID")
 
 	var req struct {
-		Type    string  `json:"type" binding:"required"`
-		Question string `json:"question" binding:"required"`
-		Points  float64 `json:"points"`
-		Order   int     `json:"order"`
+		Type     string  `json:"type" binding:"required"`
+		Question string  `json:"question" binding:"required"`
+		Points   float64 `json:"points"`
+		Order    int     `json:"order"`
 	}
 
 	if err := c.ShouldBindJSON(&req); err != nil {
