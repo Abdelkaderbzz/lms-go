@@ -43,7 +43,6 @@ jobs:
       - name: Run golangci-lint
         uses: golangci/golangci-lint-action@v4
         with:
-          version: v1.2
           args: --timeout=5m
 
   # ============================================
@@ -63,7 +62,7 @@ jobs:
           cache: true
 
       - name: Run Gosec Security Scanner
-        uses: securego/gosec@master
+        uses: securego/gosec@v2.20.0
         with:
           args: ./...
 
@@ -119,6 +118,8 @@ jobs:
       - name: Run tests with coverage
         run: go test -v -race -coverprofile=coverage.out -covermode=atomic ./...
 
+      - name: Install bc
+        run: sudo apt-get update && sudo apt-get install -y bc
       - name: Check test coverage threshold
         run: |
           COVERAGE=$(go tool cover -func=coverage.out | grep total | awk '{print $3}' | sed 's/%//')
