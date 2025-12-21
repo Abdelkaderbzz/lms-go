@@ -15,9 +15,9 @@ func CreateAnnouncement(c *gin.Context, db *gorm.DB) {
 	userID := c.GetString("user_id")
 
 	var req struct {
-		Title       string `json:"title" binding:"required"`
-		Content     string `json:"content" binding:"required"`
-		Important   bool   `json:"important"`
+		Title     string `json:"title" binding:"required"`
+		Content   string `json:"content" binding:"required"`
+		Important bool   `json:"important"`
 	}
 
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -26,11 +26,11 @@ func CreateAnnouncement(c *gin.Context, db *gorm.DB) {
 	}
 
 	announcement := models.Announcement{
-		CourseID:    courseID,
-		CreatorID:   userID,
-		Title:       req.Title,
-		Content:     req.Content,
-		Important:   req.Important,
+		CourseID:  courseID,
+		CreatorID: userID,
+		Title:     req.Title,
+		Content:   req.Content,
+		Important: req.Important,
 	}
 
 	if err := db.Create(&announcement).Error; err != nil {

@@ -14,6 +14,7 @@
 
 ## ⚙️ Configure Environment Variables
 
+
 ### Automatic (Recommended)
 
 The collection automatically captures tokens after login requests.

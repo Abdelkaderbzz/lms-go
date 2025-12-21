@@ -12,12 +12,12 @@ import (
 // GetAdminDashboard retrieves admin dashboard statistics
 func GetAdminDashboard(c *gin.Context, db *gorm.DB) {
 	var stats struct {
-		TotalUsers      int64 `json:"total_users"`
-		TotalCourses    int64 `json:"total_courses"`
+		TotalUsers       int64 `json:"total_users"`
+		TotalCourses     int64 `json:"total_courses"`
 		TotalEnrollments int64 `json:"total_enrollments"`
 		TotalAssignments int64 `json:"total_assignments"`
-		ActiveStudents  int64 `json:"active_students"`
-		ActiveCourses   int64 `json:"active_courses"`
+		ActiveStudents   int64 `json:"active_students"`
+		ActiveCourses    int64 `json:"active_courses"`
 	}
 
 	db.Model(&models.User{}).Count(&stats.TotalUsers)
@@ -54,6 +54,6 @@ func GetReports(c *gin.Context, db *gorm.DB) {
 
 	c.JSON(http.StatusOK, gin.H{
 		"enrollment_by_status": enrollmentByStatus,
-		"users_by_role": usersByRole,
+		"users_by_role":        usersByRole,
 	})
 }

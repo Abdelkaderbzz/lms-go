@@ -377,7 +377,13 @@ func GetPaginationParams(c *gin.Context) PaginationParams {
 		params.Page = 1
 		params.PageSize = 10
 	}
-	params.Validate()
+	// Validate and normalize pagination params
+	if params.Page < 1 {
+		params.Page = 1
+	}
+	if params.PageSize < 1 || params.PageSize > 100 {
+		params.PageSize = 10
+	}
 	return params
 }
 
