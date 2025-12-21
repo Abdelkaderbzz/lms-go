@@ -48,11 +48,11 @@ func TestMiddlewareChaining(t *testing.T) {
 func TestCourseRequestStructures(t *testing.T) {
 	// Test that we can create course objects
 	courseData := map[string]interface{}{
-		"title":       "Test Course",
-		"description": "Test Description",
-		"code":        "TEST-101",
-		"category":    "Programming",
-		"level":       "Beginner",
+		"title":        "Test Course",
+		"description":  "Test Description",
+		"code":         "TEST-101",
+		"category":     "Programming",
+		"level":        "Beginner",
 		"max_students": 50,
 	}
 
@@ -109,12 +109,12 @@ func TestAssignmentRequestStructures(t *testing.T) {
 // TestQuizRequestStructures tests quiz request structures
 func TestQuizRequestStructures(t *testing.T) {
 	quizData := map[string]interface{}{
-		"title":        "Quiz 1",
-		"description":  "Test your knowledge",
-		"time_limit":   30,
-		"pass_score":   70,
-		"shuffle":      true,
-		"public":       true,
+		"title":       "Quiz 1",
+		"description": "Test your knowledge",
+		"time_limit":  30,
+		"pass_score":  70,
+		"shuffle":     true,
+		"public":      true,
 	}
 
 	if quizData["title"] != "Quiz 1" {
@@ -129,8 +129,8 @@ func TestQuizRequestStructures(t *testing.T) {
 // TestGradeRequestStructures tests grade request structures
 func TestGradeRequestStructures(t *testing.T) {
 	gradeData := map[string]interface{}{
-		"points":   95,
-		"feedback": "Great work!",
+		"points":    95,
+		"feedback":  "Great work!",
 		"graded_at": "2024-01-15T10:30:00Z",
 	}
 
@@ -146,9 +146,9 @@ func TestGradeRequestStructures(t *testing.T) {
 // TestSubmissionRequestStructures tests submission request structures
 func TestSubmissionRequestStructures(t *testing.T) {
 	submissionData := map[string]interface{}{
-		"content":     "My submission content",
-		"file_url":    "https://example.com/file.pdf",
-		"status":      "submitted",
+		"content":      "My submission content",
+		"file_url":     "https://example.com/file.pdf",
+		"status":       "submitted",
 		"submitted_at": "2024-01-15T10:30:00Z",
 	}
 

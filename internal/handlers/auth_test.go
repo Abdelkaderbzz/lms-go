@@ -123,10 +123,10 @@ func TestRegisterValidationJSON(t *testing.T) {
 // TestLoginValidation tests login request validation
 func TestLoginValidation(t *testing.T) {
 	tests := []struct {
-		name    string
-		email   string
+		name     string
+		email    string
 		password string
-		isValid bool
+		isValid  bool
 	}{
 		{"Valid email", "test@example.com", "password123", true},
 		{"Invalid email format", "not-an-email", "", false},

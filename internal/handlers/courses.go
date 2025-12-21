@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"log"
 	"net/http"
 
 	"lms-go/internal/models"
@@ -47,7 +48,9 @@ func CreateCourse(c *gin.Context, db *gorm.DB) {
 	}
 
 	// Add instructor to course
-	db.Model(&course).Association("Instructors").Append(&models.User{})
+	if err := db.Model(&course).Association("Instructors").Append(&models.User{}); err != nil {
+		log.Printf("Warning: Failed to add instructor to course: %v", err)
+	}
 
 	c.JSON(http.StatusCreated, course)
 }

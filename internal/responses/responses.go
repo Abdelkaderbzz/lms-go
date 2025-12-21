@@ -47,7 +47,7 @@ func SuccessCreated(c *gin.Context, message string, data interface{}) {
 // SuccessPaginated returns a paginated success response
 func SuccessPaginated(c *gin.Context, items interface{}, total int64, page, pageSize int) {
 	totalPages := int((total + int64(pageSize) - 1) / int64(pageSize))
-	
+
 	response := APIResponse{
 		Success: true,
 		Message: "Data retrieved successfully",
