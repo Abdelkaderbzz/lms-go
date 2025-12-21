@@ -12,7 +12,7 @@ import (
 )
 
 // SeedDatabase seeds the database with test data
-func SeedDatabase(db *gorm.DB) error {
+func SeedDatabase(db *gorm.DB) {
 	fmt.Println("🌱 Starting database seeding...")
 
 	// Create admin user
@@ -168,7 +168,9 @@ func SeedDatabase(db *gorm.DB) error {
 		} else {
 			courseIDs = append(courseIDs, course.ID)
 			// Associate instructor with course
-			db.Model(&course).Association("Instructors").Append(&instructor)
+			if err := db.Model(&course).Association("Instructors").Append(&instructor); err != nil {
+				log.Printf("Warning: Failed to add instructor to course: %v", err)
+			}
 		}
 	}
 	fmt.Println("✓ Courses created")
@@ -266,11 +268,11 @@ func SeedDatabase(db *gorm.DB) error {
 			for _, studentID := range studentIDs {
 				for _, lessonID := range lessonIDs {
 					progress := &models.LessonProgress{
-						UserID:     studentID,
-						LessonID:   lessonID,
-						Completed:  false,
-						Progress:   0,
-						LastView:   time.Now(),
+						UserID:    studentID,
+						LessonID:  lessonID,
+						Completed: false,
+						Progress:  0,
+						LastView:  time.Now(),
 					}
 					if err := db.Create(progress).Error; err != nil {
 						log.Printf("Error creating lesson progress: %v", err)
@@ -283,20 +285,20 @@ func SeedDatabase(db *gorm.DB) error {
 			if len(lessonIDs) > 0 {
 				resources := []models.Resource{
 					{
-						LessonID:  lessonIDs[0],
-						CourseID:  courseIDs[0],
-						Type:      "pdf",
-						Title:     "Hello World Guide",
-						URL:       "https://example.com/hello-world.pdf",
-						FileSize:  1024000,
+						LessonID: lessonIDs[0],
+						CourseID: courseIDs[0],
+						Type:     "pdf",
+						Title:    "Hello World Guide",
+						URL:      "https://example.com/hello-world.pdf",
+						FileSize: 1024000,
 					},
 					{
-						LessonID:  lessonIDs[1],
-						CourseID:  courseIDs[0],
-						Type:      "document",
-						Title:     "Variables Cheat Sheet",
-						URL:       "https://example.com/variables-cheatsheet.docx",
-						FileSize:  512000,
+						LessonID: lessonIDs[1],
+						CourseID: courseIDs[0],
+						Type:     "document",
+						Title:    "Variables Cheat Sheet",
+						URL:      "https://example.com/variables-cheatsheet.docx",
+						FileSize: 512000,
 					},
 				}
 
@@ -552,16 +554,16 @@ func SeedDatabase(db *gorm.DB) error {
 			if len(postIDs) > 0 {
 				replies := []models.ForumReply{
 					{
-						PostID:   postIDs[0],
-						UserID:   instructor.ID,
-						Content:  "Start with the official Go tour and documentation. It's very comprehensive!",
-						Helpful:  5,
+						PostID:  postIDs[0],
+						UserID:  instructor.ID,
+						Content: "Start with the official Go tour and documentation. It's very comprehensive!",
+						Helpful: 5,
 					},
 					{
-						PostID:   postIDs[1],
-						UserID:   studentIDs[2],
-						Content:  "I found the book 'The Go Programming Language' very helpful for understanding concurrency patterns.",
-						Helpful:  3,
+						PostID:  postIDs[1],
+						UserID:  studentIDs[2],
+						Content: "I found the book 'The Go Programming Language' very helpful for understanding concurrency patterns.",
+						Helpful: 3,
 					},
 				}
 
@@ -577,18 +579,18 @@ func SeedDatabase(db *gorm.DB) error {
 		// Create announcements
 		announcements := []models.Announcement{
 			{
-				CourseID:    courseIDs[0],
-				CreatorID:   instructor.ID,
-				Title:       "Welcome to the Course!",
-				Content:     "Welcome everyone! This course will help you master Go programming. Let's get started!",
-				Important:   true,
+				CourseID:  courseIDs[0],
+				CreatorID: instructor.ID,
+				Title:     "Welcome to the Course!",
+				Content:   "Welcome everyone! This course will help you master Go programming. Let's get started!",
+				Important: true,
 			},
 			{
-				CourseID:    courseIDs[0],
-				CreatorID:   instructor.ID,
-				Title:       "Assignment 1 Due Date Extended",
-				Content:     "Due to popular request, Assignment 1 due date has been extended to next Friday.",
-				Important:   true,
+				CourseID:  courseIDs[0],
+				CreatorID: instructor.ID,
+				Title:     "Assignment 1 Due Date Extended",
+				Content:   "Due to popular request, Assignment 1 due date has been extended to next Friday.",
+				Important: true,
 			},
 		}
 
@@ -635,8 +637,6 @@ func SeedDatabase(db *gorm.DB) error {
 	fmt.Println("  Instructor: instructor1@example.com / instructor123")
 	fmt.Println("  Student: student1@example.com / student123")
 	fmt.Println("")
-
-	return nil
 }
 
 // hashPassword hashes a password using bcrypt

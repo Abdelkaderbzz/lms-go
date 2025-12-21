@@ -31,46 +31,46 @@ type User struct {
 	UpdatedAt time.Time `json:"updated_at"`
 
 	// Relations
-	Courses           []Course         `gorm:"many2many:course_instructors;" json:"-"`
-	EnrolledCourses   []Course         `gorm:"many2many:course_enrollments;" json:"-"`
-	Submissions       []Submission     `gorm:"foreignKey:UserID" json:"-"`
-	Comments          []Comment        `gorm:"foreignKey:UserID" json:"-"`
-	Grades            []Grade          `gorm:"foreignKey:UserID" json:"-"`
-	Announcements     []Announcement   `gorm:"foreignKey:CreatorID" json:"-"`
-	NotificationRead  []Notification   `gorm:"foreignKey:UserID" json:"-"`
-	CreatedQuizzes    []Quiz           `gorm:"foreignKey:CreatorID" json:"-"`
-	QuizAttempts      []QuizAttempt    `gorm:"foreignKey:UserID" json:"-"`
-	ForumPosts        []ForumPost      `gorm:"foreignKey:UserID" json:"-"`
-	ForumReplies      []ForumReply     `gorm:"foreignKey:UserID" json:"-"`
+	Courses          []Course       `gorm:"many2many:course_instructors;" json:"-"`
+	EnrolledCourses  []Course       `gorm:"many2many:course_enrollments;" json:"-"`
+	Submissions      []Submission   `gorm:"foreignKey:UserID" json:"-"`
+	Comments         []Comment      `gorm:"foreignKey:UserID" json:"-"`
+	Grades           []Grade        `gorm:"foreignKey:UserID" json:"-"`
+	Announcements    []Announcement `gorm:"foreignKey:CreatorID" json:"-"`
+	NotificationRead []Notification `gorm:"foreignKey:UserID" json:"-"`
+	CreatedQuizzes   []Quiz         `gorm:"foreignKey:CreatorID" json:"-"`
+	QuizAttempts     []QuizAttempt  `gorm:"foreignKey:UserID" json:"-"`
+	ForumPosts       []ForumPost    `gorm:"foreignKey:UserID" json:"-"`
+	ForumReplies     []ForumReply   `gorm:"foreignKey:UserID" json:"-"`
 }
 
 // Course represents a learning course
 type Course struct {
-	ID          string                  `gorm:"primaryKey" json:"id"`
-	Title       string                  `json:"title"`
-	Description string                  `json:"description"`
-	Code        string                  `gorm:"uniqueIndex" json:"code"`
-	Category    string                  `json:"category"`
-	Level       string                  `json:"level"` // Beginner, Intermediate, Advanced
-	Thumbnail   string                  `json:"thumbnail"`
-	Status      string                  `json:"status"` // active, archived, draft
-	StartDate   time.Time               `json:"start_date"`
-	EndDate     time.Time               `json:"end_date"`
-	MaxStudents int                     `json:"max_students"`
-	CreatedAt   time.Time               `json:"created_at"`
-	UpdatedAt   time.Time               `json:"updated_at"`
+	ID          string    `gorm:"primaryKey" json:"id"`
+	Title       string    `json:"title"`
+	Description string    `json:"description"`
+	Code        string    `gorm:"uniqueIndex" json:"code"`
+	Category    string    `json:"category"`
+	Level       string    `json:"level"` // Beginner, Intermediate, Advanced
+	Thumbnail   string    `json:"thumbnail"`
+	Status      string    `json:"status"` // active, archived, draft
+	StartDate   time.Time `json:"start_date"`
+	EndDate     time.Time `json:"end_date"`
+	MaxStudents int       `json:"max_students"`
+	CreatedAt   time.Time `json:"created_at"`
+	UpdatedAt   time.Time `json:"updated_at"`
 
 	// Relations
-	Instructors    []User          `gorm:"many2many:course_instructors;" json:"instructors"`
-	Students       []User          `gorm:"many2many:course_enrollments;" json:"students"`
-	Modules        []Module        `json:"modules"`
-	Assignments    []Assignment    `json:"assignments"`
-	Quizzes        []Quiz          `json:"quizzes"`
-	Announcements  []Announcement  `json:"announcements"`
-	Discussions    []Discussion    `json:"discussions"`
-	Resources      []Resource      `json:"resources"`
-	Enrollments    []Enrollment    `json:"enrollments"`
-	Grades         []Grade         `json:"grades"`
+	Instructors   []User         `gorm:"many2many:course_instructors;" json:"instructors"`
+	Students      []User         `gorm:"many2many:course_enrollments;" json:"students"`
+	Modules       []Module       `json:"modules"`
+	Assignments   []Assignment   `json:"assignments"`
+	Quizzes       []Quiz         `json:"quizzes"`
+	Announcements []Announcement `json:"announcements"`
+	Discussions   []Discussion   `json:"discussions"`
+	Resources     []Resource     `json:"resources"`
+	Enrollments   []Enrollment   `json:"enrollments"`
+	Grades        []Grade        `json:"grades"`
 }
 
 // Module represents a course module
@@ -101,23 +101,23 @@ type Lesson struct {
 	CreatedAt   time.Time `json:"created_at"`
 	UpdatedAt   time.Time `json:"updated_at"`
 
-	Module    Module               `gorm:"foreignKey:ModuleID" json:"-"`
-	Resources []Resource           `gorm:"foreignKey:LessonID" json:"resources"`
-	Progress  []LessonProgress     `gorm:"foreignKey:LessonID" json:"progress"`
+	Module    Module           `gorm:"foreignKey:ModuleID" json:"-"`
+	Resources []Resource       `gorm:"foreignKey:LessonID" json:"resources"`
+	Progress  []LessonProgress `gorm:"foreignKey:LessonID" json:"progress"`
 }
 
 // Assignment represents a course assignment
 type Assignment struct {
-	ID          string                  `gorm:"primaryKey" json:"id"`
-	CourseID    string                  `json:"course_id"`
-	Title       string                  `json:"title"`
-	Description string                  `json:"description"`
-	DueDate     time.Time               `json:"due_date"`
-	Points      float64                 `json:"points"`
-	Type        string                  `json:"type"` // homework, project, essay
-	Status      string                  `json:"status"` // active, closed
-	CreatedAt   time.Time               `json:"created_at"`
-	UpdatedAt   time.Time               `json:"updated_at"`
+	ID          string    `gorm:"primaryKey" json:"id"`
+	CourseID    string    `json:"course_id"`
+	Title       string    `json:"title"`
+	Description string    `json:"description"`
+	DueDate     time.Time `json:"due_date"`
+	Points      float64   `json:"points"`
+	Type        string    `json:"type"`   // homework, project, essay
+	Status      string    `json:"status"` // active, closed
+	CreatedAt   time.Time `json:"created_at"`
+	UpdatedAt   time.Time `json:"updated_at"`
 
 	Course      Course         `gorm:"foreignKey:CourseID" json:"-"`
 	Submissions []Submission   `gorm:"foreignKey:AssignmentID" json:"submissions"`
@@ -191,25 +191,25 @@ type Quiz struct {
 	CreatedAt   time.Time `json:"created_at"`
 	UpdatedAt   time.Time `json:"updated_at"`
 
-	Course       Course          `gorm:"foreignKey:CourseID" json:"-"`
-	Creator      User            `gorm:"foreignKey:CreatorID" json:"-"`
-	Questions    []Question      `gorm:"foreignKey:QuizID" json:"questions"`
-	Attempts     []QuizAttempt   `gorm:"foreignKey:QuizID" json:"attempts"`
+	Course    Course        `gorm:"foreignKey:CourseID" json:"-"`
+	Creator   User          `gorm:"foreignKey:CreatorID" json:"-"`
+	Questions []Question    `gorm:"foreignKey:QuizID" json:"questions"`
+	Attempts  []QuizAttempt `gorm:"foreignKey:QuizID" json:"attempts"`
 }
 
 // Question represents quiz questions
 type Question struct {
-	ID        string         `gorm:"primaryKey" json:"id"`
-	QuizID    string         `json:"quiz_id"`
-	Type      string         `json:"type"` // multiple_choice, true_false, essay, matching
-	Question  string         `json:"question"`
-	Points    float64        `json:"points"`
-	Order     int            `json:"order"`
-	CreatedAt time.Time      `json:"created_at"`
-	UpdatedAt time.Time      `json:"updated_at"`
+	ID        string    `gorm:"primaryKey" json:"id"`
+	QuizID    string    `json:"quiz_id"`
+	Type      string    `json:"type"` // multiple_choice, true_false, essay, matching
+	Question  string    `json:"question"`
+	Points    float64   `json:"points"`
+	Order     int       `json:"order"`
+	CreatedAt time.Time `json:"created_at"`
+	UpdatedAt time.Time `json:"updated_at"`
 
-	Quiz    Quiz      `gorm:"foreignKey:QuizID" json:"-"`
-	Options []Option  `gorm:"foreignKey:QuestionID" json:"options"`
+	Quiz    Quiz     `gorm:"foreignKey:QuizID" json:"-"`
+	Options []Option `gorm:"foreignKey:QuestionID" json:"options"`
 }
 
 // Option represents question options
@@ -226,29 +226,29 @@ type Option struct {
 
 // QuizAttempt represents student quiz attempts
 type QuizAttempt struct {
-	ID        string    `gorm:"primaryKey" json:"id"`
-	QuizID    string    `json:"quiz_id"`
-	UserID    string    `json:"user_id"`
-	StartedAt time.Time `json:"started_at"`
+	ID        string     `gorm:"primaryKey" json:"id"`
+	QuizID    string     `json:"quiz_id"`
+	UserID    string     `json:"user_id"`
+	StartedAt time.Time  `json:"started_at"`
 	EndedAt   *time.Time `json:"ended_at"`
-	Score     float64   `json:"score"`
-	Status    string    `json:"status"` // in_progress, submitted, reviewed
-	CreatedAt time.Time `json:"created_at"`
+	Score     float64    `json:"score"`
+	Status    string     `json:"status"` // in_progress, submitted, reviewed
+	CreatedAt time.Time  `json:"created_at"`
 
-	Quiz      Quiz         `gorm:"foreignKey:QuizID" json:"-"`
-	User      User         `gorm:"foreignKey:UserID" json:"-"`
-	Answers   []QuizAnswer `gorm:"foreignKey:QuizAttemptID" json:"answers"`
+	Quiz    Quiz         `gorm:"foreignKey:QuizID" json:"-"`
+	User    User         `gorm:"foreignKey:UserID" json:"-"`
+	Answers []QuizAnswer `gorm:"foreignKey:QuizAttemptID" json:"answers"`
 }
 
 // QuizAnswer represents student answers
 type QuizAnswer struct {
-	ID          string    `gorm:"primaryKey" json:"id"`
-	QuizAttemptID string  `json:"quiz_attempt_id"`
-	QuestionID  string    `json:"question_id"`
-	SelectedID  string    `json:"selected_id"` // For multiple choice/matching
-	TextAnswer  string    `json:"text_answer"` // For essay/short answer
-	Points      float64   `json:"points"`
-	CreatedAt   time.Time `json:"created_at"`
+	ID            string    `gorm:"primaryKey" json:"id"`
+	QuizAttemptID string    `json:"quiz_attempt_id"`
+	QuestionID    string    `json:"question_id"`
+	SelectedID    string    `json:"selected_id"` // For multiple choice/matching
+	TextAnswer    string    `json:"text_answer"` // For essay/short answer
+	Points        float64   `json:"points"`
+	CreatedAt     time.Time `json:"created_at"`
 
 	QuizAttempt QuizAttempt `gorm:"foreignKey:QuizAttemptID" json:"-"`
 	Question    Question    `gorm:"foreignKey:QuestionID" json:"-"`
@@ -256,14 +256,14 @@ type QuizAnswer struct {
 
 // Enrollment represents course enrollment
 type Enrollment struct {
-	ID        string    `gorm:"primaryKey" json:"id"`
-	CourseID  string    `json:"course_id"`
-	UserID    string    `json:"user_id"`
-	Status    string    `json:"status"` // active, completed, dropped
-	Progress  float64   `json:"progress"`
+	ID         string    `gorm:"primaryKey" json:"id"`
+	CourseID   string    `json:"course_id"`
+	UserID     string    `json:"user_id"`
+	Status     string    `json:"status"` // active, completed, dropped
+	Progress   float64   `json:"progress"`
 	EnrolledAt time.Time `json:"enrolled_at"`
-	CreatedAt time.Time `json:"created_at"`
-	UpdatedAt time.Time `json:"updated_at"`
+	CreatedAt  time.Time `json:"created_at"`
+	UpdatedAt  time.Time `json:"updated_at"`
 
 	Course Course `gorm:"foreignKey:CourseID" json:"-"`
 	User   User   `gorm:"foreignKey:UserID" json:"-"`
@@ -308,8 +308,8 @@ type Discussion struct {
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
 
-	Course Course       `gorm:"foreignKey:CourseID" json:"-"`
-	Posts  []ForumPost  `gorm:"foreignKey:DiscussionID" json:"posts"`
+	Course Course      `gorm:"foreignKey:CourseID" json:"-"`
+	Posts  []ForumPost `gorm:"foreignKey:DiscussionID" json:"posts"`
 }
 
 // ForumPost represents forum posts
@@ -373,13 +373,13 @@ type LessonProgress struct {
 
 // Certificate represents course completion certificates
 type Certificate struct {
-	ID        string    `gorm:"primaryKey" json:"id"`
-	CourseID  string    `json:"course_id"`
-	UserID    string    `json:"user_id"`
-	Code      string    `gorm:"uniqueIndex" json:"code"`
-	IssuedAt  time.Time `json:"issued_at"`
+	ID        string     `gorm:"primaryKey" json:"id"`
+	CourseID  string     `json:"course_id"`
+	UserID    string     `json:"user_id"`
+	Code      string     `gorm:"uniqueIndex" json:"code"`
+	IssuedAt  time.Time  `json:"issued_at"`
 	ExpiresAt *time.Time `json:"expires_at"`
-	CreatedAt time.Time `json:"created_at"`
+	CreatedAt time.Time  `json:"created_at"`
 
 	Course Course `gorm:"foreignKey:CourseID" json:"-"`
 	User   User   `gorm:"foreignKey:UserID" json:"-"`

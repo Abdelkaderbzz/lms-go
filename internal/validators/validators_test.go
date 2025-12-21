@@ -72,7 +72,7 @@ func TestIsValidEmail(t *testing.T) {
 		{"missing.domain@", false},
 		{"@example.com", false},
 		{"user@", false},
-		{"user_name@example.com", true},  // Underscores are valid
+		{"user_name@example.com", true}, // Underscores are valid
 	}
 
 	for _, tt := range tests {
@@ -141,9 +141,9 @@ func TestContainsDigit(t *testing.T) {
 
 func TestRegisterRequestValidate(t *testing.T) {
 	tests := []struct {
-		name    string
-		req     RegisterRequest
-		hasErrs bool
+		name      string
+		req       RegisterRequest
+		hasErrs   bool
 		errFields []string
 	}{
 		{
@@ -234,7 +234,7 @@ func TestRegisterRequestValidate(t *testing.T) {
 			req: RegisterRequest{
 				Email:     "user@example.com",
 				Password:  "SecurePass123",
-				FirstName: "John",  // Actually valid length
+				FirstName: "John", // Actually valid length
 				LastName:  "Doe",
 				Role:      "student",
 			},
@@ -262,7 +262,7 @@ func TestRegisterRequestValidate(t *testing.T) {
 				Role:      "superuser",
 			},
 			hasErrs:   true,
-			errFields: []string{},  // Will have errors but checking by count instead
+			errFields: []string{}, // Will have errors but checking by count instead
 		},
 	}
 
@@ -287,9 +287,9 @@ func TestRegisterRequestValidate(t *testing.T) {
 
 func TestLoginRequestValidate(t *testing.T) {
 	tests := []struct {
-		name    string
-		req     LoginRequest
-		hasErrs bool
+		name      string
+		req       LoginRequest
+		hasErrs   bool
 		errFields []string
 	}{
 		{
@@ -350,9 +350,9 @@ func TestLoginRequestValidate(t *testing.T) {
 
 func TestCreateCourseRequestValidate(t *testing.T) {
 	tests := []struct {
-		name    string
-		req     CreateCourseRequest
-		hasErrs bool
+		name      string
+		req       CreateCourseRequest
+		hasErrs   bool
 		errFields []string
 	}{
 		{
@@ -451,7 +451,7 @@ func TestValidateStringLength(t *testing.T) {
 			hasError := err != nil
 
 			if hasError != tt.hasError {
-				t.Errorf("ValidateStringLength(%s, %s, %d, %d) hasError=%v, want %v", 
+				t.Errorf("ValidateStringLength(%s, %s, %d, %d) hasError=%v, want %v",
 					tt.field, tt.value, tt.minLen, tt.maxLen, hasError, tt.hasError)
 			}
 		})

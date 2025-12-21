@@ -84,11 +84,11 @@ type QuizDTO struct {
 
 // EnrollmentDTO represents enrollment data transfer object
 type EnrollmentDTO struct {
-	ID        string    `json:"id"`
-	CourseID  string    `json:"course_id"`
-	UserID    string    `json:"user_id"`
-	Status    string    `json:"status"`
-	Progress  float64   `json:"progress"`
+	ID         string    `json:"id"`
+	CourseID   string    `json:"course_id"`
+	UserID     string    `json:"user_id"`
+	Status     string    `json:"status"`
+	Progress   float64   `json:"progress"`
 	EnrolledAt time.Time `json:"enrolled_at"`
 }
 
@@ -175,11 +175,11 @@ type SubmitAssignmentRequest struct {
 
 // CreateQuestionRequest represents question creation request
 type CreateQuestionRequest struct {
-	Type      string        `json:"type" binding:"required"`
-	Question  string        `json:"question" binding:"required"`
-	Points    float64       `json:"points" binding:"required"`
-	Order     int           `json:"order"`
-	Options   []OptionInput `json:"options"`
+	Type     string        `json:"type" binding:"required"`
+	Question string        `json:"question" binding:"required"`
+	Points   float64       `json:"points" binding:"required"`
+	Order    int           `json:"order"`
+	Options  []OptionInput `json:"options"`
 }
 
 // OptionInput represents option input for questions
@@ -224,11 +224,11 @@ type DashboardStatsDTO struct {
 
 // CourseStatsDTO represents course statistics
 type CourseStatsDTO struct {
-	CourseID          string  `json:"course_id"`
-	TotalEnrollments  int64   `json:"total_enrollments"`
-	TotalCompletions  int64   `json:"total_completions"`
-	AverageProgress   float64 `json:"average_progress"`
-	AverageGrade      float64 `json:"average_grade"`
-	CompletionRate    float64 `json:"completion_rate"`
-	LastUpdated       time.Time `json:"last_updated"`
+	CourseID         string    `json:"course_id"`
+	TotalEnrollments int64     `json:"total_enrollments"`
+	TotalCompletions int64     `json:"total_completions"`
+	AverageProgress  float64   `json:"average_progress"`
+	AverageGrade     float64   `json:"average_grade"`
+	CompletionRate   float64   `json:"completion_rate"`
+	LastUpdated      time.Time `json:"last_updated"`
 }
